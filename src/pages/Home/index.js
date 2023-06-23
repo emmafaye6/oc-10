@@ -13,7 +13,13 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { last } = useData();
+  const { data } = useData();
+  const lastEvent =
+    data && data.events && data.events.length > 0
+      ? data.events[data.events.length - 1]
+      : null;
+  // CHANGE: the original {last} = useData() object didn't fetch the last data but the overall data
+  // If I have more than one data object then i'm getting the event in the position that is the last of the array
   return (
     <>
       <header>
@@ -108,24 +114,28 @@ const Page = () => {
             {({ setIsOpened }) => (
               <Form onSuccess={() => setIsOpened(true)} onError={() => null} />
             )}
+            {/* The success modal appears when set is opened is set to true, otherwise, nothing happens */}
           </Modal>
         </div>
       </main>
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          <EventCard
-            imageSrc={last?.imageSrc}
-            title={last?.title}
-            date={new Date(last?.date)}
-            small
-            label="boom"
-          />
+          {lastEvent && (
+            <EventCard
+              imageSrc={lastEvent.cover}
+              imageAlt={lastEvent.description}
+              title={lastEvent.title}
+              date={new Date(lastEvent.date)}
+              small
+              label={lastEvent.id}
+            />
+          )}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>
           <address>45 avenue de la République, 75000 Paris</address>
-          <div>01 23 45 67 89</div>
+          <div>0 1 23 45 67 89</div>
           <div>contact@77events.com</div>
           <div>
             <a href="#twitch">
