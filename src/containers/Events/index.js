@@ -29,6 +29,9 @@ const EventList = () => {
       }
       return false;
     });
+
+  // CHANGE: ensuring that only the posts that are at an index higher than the current page will show
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);

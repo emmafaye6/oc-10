@@ -114,7 +114,7 @@ const Page = () => {
             {({ setIsOpened }) => (
               <Form onSuccess={() => setIsOpened(true)} onError={() => null} />
             )}
-            {/* The success modal appears when set is opened is set to true, otherwise, nothing happens */}
+            {/* The success modal appears when setIsOpened is set to true, otherwise, nothing happens */}
           </Modal>
         </div>
       </main>
