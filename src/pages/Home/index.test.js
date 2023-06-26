@@ -6,7 +6,7 @@ import {
   screen,
 } from "@testing-library/react";
 import Home from "./index";
-import { toContainElement } from "@testing-library/jest-dom/dist/matchers";
+import EventCard from "../../components/EventCard";
 
 describe("When Form is created", () => {
   it("a list of fields card is displayed", async () => {
@@ -34,22 +34,43 @@ describe("When Form is created", () => {
 });
 
 describe("When a page is created", () => {
-  it("should display a list of events", async () => {
-    //  to implement functional test
+  it("should display a list of events", () => {
+    const { container } = render(<Home />);
+    expect(container.querySelector("#events")).toBeInTheDocument();
   });
+  // CHANGE: added test here
 
-  // // it("should display a list of people", () => {
-  // //   // to implement, functional test
-  // // });
+  it("should display a list of people", async () => {
+    render(<Home />);
+    await screen.findByText("Samira");
+    await screen.findByText("Directeur marketing");
+    await screen.findByText("VP communication");
 
-  it("should display a footer", async () => {
+    const name = document.getElementsByClassName("PeopleCard__name");
+    expect(name).toBeInTheDocument;
+  });
+  // CHANGE: added a test here
+
+  it("should display a footer", () => {
     const { getByTestId } = render(<Home />);
     const footer = getByTestId("footer");
     expect(footer).toBeInTheDocument();
   });
-  // CHANGE: added a unit test here.
+  // CHANGE: added a test here.
 
   it("should display an event card with the last event", () => {
-    //  to implement functional test
+    render(
+      <>
+        <Home />
+        <EventCard />
+      </>
+    );
+    const lastEvent = screen.getByTestId("card-testid");
+    const lastImage = screen.getAllByTestId("card-image-testid");
+    expect(lastEvent).toBeInTheDocument();
+    expect(lastEvent.getAttribute("class").includes("Eventcard--small"));
+    expect(lastImage).not.toBeNaN();
+    expect(lastImage).toBeDefined();
   });
+  // CHANGE added a test here
 });
