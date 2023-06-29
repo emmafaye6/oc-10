@@ -20,6 +20,7 @@ const EventList = () => {
       }
       return event.type === type;
     })
+    // CHANGE: ensuring that only the posts containing the type of event we want are being filtered
     .filter((event, index) => {
       if (
         (currentPage - 1) * PER_PAGE <= index &&
@@ -29,8 +30,6 @@ const EventList = () => {
       }
       return false;
     });
-
-  // CHANGE: ensuring that only the posts that are at an index higher than the current page will show
 
   const changeType = (evtType) => {
     setCurrentPage(1);
